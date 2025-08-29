@@ -160,3 +160,41 @@
     font-weight: 500;
     color: #666;
 }
+/* Add this to the bottom of GameifiedProductShowcase.css */
+
+.viewer-column {
+    position: relative; /* This is needed to position the button */
+    min-height: 500px;
+    height: 70vh;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+}
+
+.fullscreen-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease;
+}
+
+.fullscreen-btn:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* This makes the canvas take up the full space inside its container */
+.three-canvas-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+}

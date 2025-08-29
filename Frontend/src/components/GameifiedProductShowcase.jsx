@@ -5,12 +5,13 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import supabase from './../../utils/supabase';
 import './GameifiedProductShowcase.css';
-
+import { Maximize, Minimize } from 'lucide-react';
+// import './GameifiedProductShowcase.css';
 const GameifiedProductShowcase = () => {
     const { id } = useParams();
     const mountRef = useRef(null);
     const animationRef = useRef(null);
-
+    const [isFullscreen, setIsFullscreen] = useState(false);
     const [productData, setProductData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -97,13 +98,33 @@ const GameifiedProductShowcase = () => {
             renderer.dispose();
         };
     }, [productData]);
+    useEffect(() => {
+        const onFullscreenChange = () => {
+            setIsFullscreen(!!document.fullscreenElement);
+        };
+        document.addEventListener('fullscreenchange', onFullscreenChange);
+        return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+    }, []);
 
+    
+const handleFullscreenToggle = () => {
+        const viewerElement = mountRef.current;
+        if (!viewerElement) return;
+
+        if (!document.fullscreenElement) {
+            viewerElement.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable full-screen mode: ${err.message} (${err.name})`);
+            });
+        } else {
+            document.exitFullscreen();
+        }
+    };
     if (loading) return <div className="loading-container">Loading Product...</div>;
     if (error) return <div className="error-container">Error: {error}</div>;
     if (!productData) return <div className="loading-container">Product data could not be loaded.</div>;
 
     return (
-        <div className="showcase-container">
+<div className="showcase-container">
             <header className="showcase-header">
                 <h1>{productData.model_name}</h1>
                 <p>{productData.category}</p>
@@ -111,9 +132,14 @@ const GameifiedProductShowcase = () => {
             
             <div className="showcase-grid">
                 <div className="viewer-column">
-                    <div ref={mountRef} className="three-canvas-container" />
+                    {/* The ref is now on the outer container for fullscreen */}
+                    <div ref={mountRef} className="three-canvas-container">
+                        {/* NEW: Fullscreen Button */}
+                        <button onClick={handleFullscreenToggle} className="fullscreen-btn" title="Toggle Fullscreen">
+                            {isFullscreen ? <Minimize size={20} /> : <Maximize size={20} />}
+                        </button>
+                    </div>
                 </div>
-                
                 <div className="details-column">
                     <section className="details-section">
                         <h2>Description</h2>
