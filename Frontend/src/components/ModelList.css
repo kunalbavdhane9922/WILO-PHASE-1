@@ -1,0 +1,64 @@
+/* src/components/ModelList.css */
+
+.model-list-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 2rem 0;
+}
+
+.model-list-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.model-list-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column on mobile */
+    gap: 1.5rem;
+}
+
+/* Two columns on tablets and wider screens */
+@media (min-width: 768px) {
+    .model-list-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.model-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.model-card {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    padding: 1.5rem;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.model-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    border-color: #00e600; /* Green accent on hover */
+}
+
+.model-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 0.5rem 0;
+}
+
+.model-card p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0;
+    text-transform: capitalize;
+}
